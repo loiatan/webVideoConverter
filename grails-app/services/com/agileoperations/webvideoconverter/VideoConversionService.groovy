@@ -5,7 +5,10 @@ import org.springframework.web.multipart.MultipartFile
 
 @Transactional
 class VideoConversionService {
+	
+	AmazonS3Service amazonS3Service
 
-    void convertToWebFormat(MultipartFile file) {
+    void convertToWebFormat(MultipartFile videoFile) {
+		def sourceVideoFile = amazonS3Service.upload(videoFile)
     }
 }

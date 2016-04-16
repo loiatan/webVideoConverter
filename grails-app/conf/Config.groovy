@@ -1,3 +1,5 @@
+import javax.sound.midi.MidiDevice.Info;
+
 // locations to search for config files that get merged into the main config;
 // config files can be ConfigSlurper scripts, Java properties files, or classes
 // in the classpath in ConfigSlurper format
@@ -103,6 +105,8 @@ log4j.main = {
     //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
     //}
 
+	debug  'grails.app.controllers', 'grails.app.services', 'com.agileoperations'
+	
     error  'org.codehaus.groovy.grails.web.servlet',        // controllers
            'org.codehaus.groovy.grails.web.pages',          // GSP
            'org.codehaus.groovy.grails.web.sitemesh',       // layouts
@@ -131,6 +135,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**/images/**':    ['permitAll'],
 	'/**/favicon.ico':  ['permitAll'],
 	'/dbconsole/**':  ['permitAll'],
-	'/VideoConversionController/**':  ['ROLE_DEVOPS']
+	'/VideoConversion/**':  ['ROLE_DEVOPS']
 ]
+
 

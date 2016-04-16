@@ -4,6 +4,7 @@ import grails.test.mixin.TestFor
 
 import org.codehaus.groovy.grails.plugins.testing.GrailsMockMultipartFile
 
+import spock.lang.Ignore
 import spock.lang.Specification
 
 /**
@@ -16,7 +17,7 @@ class VideoConversionServiceSpec extends Specification {
     }
 
 	@Ignore
-	void "should convert input video to web format"() {
+	def "should convert input video to web format"() {
 		given:
 		GrailsMockMultipartFile videoFile = new GrailsMockMultipartFile('videoFile', 'some file contents'.bytes)
 		
@@ -24,8 +25,8 @@ class VideoConversionServiceSpec extends Specification {
 		service.convertToWebFormat(videoFile)
 		
 		then:
-		1 * service.amazonS3Service.upload(videoFile) >> [sourceVideoFile: "s3://webVideoConverter/input/timestamp/sample.dv"]
-		1 * service.zencoderClient.encodeToWeb([sourceVideoFile: "s3://webVideoConverter/input/timestamp/sample.dv"]) >> [encodedVideoFile: "s3://webVideoConverter/output/timestamp/sample.mpg"]
+		1 * service.amazonS3Service.upload(videoFile) >> [sourceVideoFile: "s3://agileoperations.com.br/webvideoconverter/input/timestamp/sample.dv"]
+		//1 * service.zencoderClient.encodeToWeb([sourceVideoFile: "s3://webVideoConverter/input/timestamp/sample.dv"]) >> [encodedVideoFile: "s3://webVideoConverter/output/timestamp/sample.mpg"]
 	}
 	
     def cleanup() {

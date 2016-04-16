@@ -48,7 +48,7 @@ body {
 }
 
 #grailsLogo {
-	background-color: #abbf78;
+	background-color: #8080ff;
 }
 
 /* replace with .no-boxshadow body if you have modernizr available */
@@ -65,7 +65,7 @@ body {
 }
 
 a:link, a:visited, a:hover {
-	color: #48802c;
+	color: #000000;
 }
 
 a:hover, a:active {
@@ -73,7 +73,7 @@ a:hover, a:active {
 }
 
 h1 {
-	color: #48802c;
+	color: #000000;
 	font-weight: normal;
 	font-size: 1.25em;
 	margin: 0.8em 0 0.3em 0;
@@ -108,7 +108,7 @@ img {
 }
 
 .footer {
-	background: #abbf78;
+	background: #8080ff;
 	color: #000;
 	clear: both;
 	font-size: 0.8em;
@@ -283,7 +283,7 @@ input:focus, select:focus, textarea:focus {
 }
 
 .required-indicator {
-	color: #48802C;
+	color: #000000;
 	display: inline-block;
 	font-weight: bold;
 	margin-left: 0.3em;
@@ -593,4 +593,81 @@ th:hover, tr:hover {
 a.skip {
 	position: absolute;
 	left: -9999px;
+}
+
+//Index
+
+#status {
+	background-color: #eee;
+	border: .2em solid #fff;
+	margin: 2em 2em 1em;
+	padding: 1em;
+	width: 12em;
+	float: left;
+	-moz-box-shadow: 0px 0px 1.25em #ccc;
+	-webkit-box-shadow: 0px 0px 1.25em #ccc;
+	box-shadow: 0px 0px 1.25em #ccc;
+	-moz-border-radius: 0.6em;
+	-webkit-border-radius: 0.6em;
+	border-radius: 0.6em;
+}
+
+.ie6 #status {
+	display: inline; /* float double margin fix http://www.positioniseverything.net/explorer/doubled-margin.html */
+}
+
+#status ul {
+	font-size: 0.9em;
+	list-style-type: none;
+	margin-bottom: 0.6em;
+	padding: 0;
+}
+
+#status li {
+	line-height: 1.3;
+}
+
+#status h1 {
+	text-transform: uppercase;
+	font-size: 1.1em;
+	margin: 0 0 0.3em;
+}
+
+#page-body {
+	margin: 7em 14em 7em 18em;
+}
+
+h2 {
+	margin-top: 1em;
+	margin-bottom: 0.3em;
+	font-size: 1em;
+}
+
+p {
+	line-height: 1.5;
+	margin: 0.25em 0;
+}
+
+#controller-list ul {
+	list-style-position: inside;
+}
+
+#controller-list li {
+	line-height: 1.3;
+	list-style-position: inside;
+	margin: 0.25em 0;
+}
+
+@media screen and (max-width: 480px) {
+	#status {
+		display: none;
+	}
+
+	#page-body {
+		margin: 0 1em 1em;
+	}
+
+	#page-body h1 {
+		margin-top: 0;
+	}
 }
