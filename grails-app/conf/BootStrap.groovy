@@ -11,16 +11,15 @@ class BootStrap {
 	def createDefaultUsersAndRoles() {
 		def devOpsRole = Role.findByAuthority('ROLE_DEVOPS') ?: new Role(name: 'DevOps Administrator', authority: 'ROLE_DEVOPS').save(failOnError: true)
 
-		def username = "rodrigo@agileoperations.com.br"
+		def username = "admin"
 		def devOpsUser = User.findByUsername(username) ?: new User(
 				username: username,
-				password: 'notTheRealPassword',
+				password: 'admin',
 				enabled: true).save(failOnError: true)
 
 		if (!devOpsUser.authorities.contains(devOpsRole)) {
 			UserRole.create devOpsUser, devOpsRole
 		}
-		println "CREATED!"
 	}
 	
     def destroy = {
