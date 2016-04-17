@@ -1,13 +1,11 @@
 package com.agileoperations.webvideoconverter
 
-import grails.test.mixin.TestFor
 import org.codehaus.groovy.grails.plugins.testing.GrailsMockMultipartFile
 import spock.lang.Specification
 
 /**
  * Integration tests for AmazonS3Client
  */
-@TestFor(AmazonS3Client)
 class AmazonS3ClientIntegrationSpec extends Specification {
 	
     def setup() {
