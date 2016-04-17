@@ -14,9 +14,18 @@ import com.amazonaws.services.s3.transfer.*
 @Transactional
 class AmazonS3Service {
 	
+	// Default SDK credentials provider 
 	DefaultAWSCredentialsProviderChain credentialProviderChain
+	
+	// TransferManager from AWS SDK to manager file transfers to S3
 	TransferManager transferManager
+	
+	// Factory to manage file creation
 	FileFactory fileFactory
+	
+	// Grails services are singleton. It is necessary to set the scope as "prototype" so that a new service 
+	// is created every time it is injected into another class, avoiding cocurrent problems for TransferManager.
+	static scope = "prototype"
 	
 	public AmazonS3Service(){
 		credentialProviderChain = new DefaultAWSCredentialsProviderChain()
@@ -53,7 +62,7 @@ class AmazonS3Service {
 		def upload = transferManager.upload(putObjectRequest)
 
 		// Get liestener to monitor process		
-		ProgressListener myProgressListener = getProgressListener(upload)
+		ProgressListener myProgressListener = getProgressListener(upload, videoFile.absolutePath)
 		upload.addProgressListener(myProgressListener)
 		
 		// Wait process to finish
@@ -68,12 +77,13 @@ class AmazonS3Service {
 		return uploadedS3FileInfo
 	}
 	
-	public ProgressListener getProgressListener(upload){
+	private ProgressListener getProgressListener(upload, absoluteFilePath){
 		ProgressListener progressListener = new ProgressListener() {
 			// This method is called periodically as your transfer progresses
 			public void progressChanged(ProgressEvent progressEvent) {
 				double percentageCompleted = upload.getProgress().getPercentTransferred()
-				log.info "Transfer: $upload.description"
+				log.info "Transfer: $absoluteFilePath"
+				log.info "  - $upload.description"
 				log.info "  - State: $upload.state"
 				log.info "  - Progress: $percentageCompleted" + "%"
 		 
