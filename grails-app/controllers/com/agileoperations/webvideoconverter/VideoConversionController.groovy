@@ -8,8 +8,8 @@ class VideoConversionController {
 
     def convert() {
 		MultipartFile file = request.getFile("videoFile")
-		videoConversionService.convertToWebFormat(file)
-		redirect(action: 'list')
+		Map encodedVideoInfo = videoConversionService.convertToWebFormat(file)
+		render(view: 'show', model: encodedVideoInfo)
 	}
 	
 }

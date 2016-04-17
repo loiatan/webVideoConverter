@@ -22,12 +22,14 @@ class VideoConversionControllerSpec extends Specification {
 		request.addFile(videoFile)
 		
 		when:
-		controller.convert()
+		Map encodedVideoInfo = controller.convert()
 		
 		then:
 		request.getFile("videoFile") == videoFile
-		1 * controller.videoConversionService.convertToWebFormat(videoFile)
-		response.redirectedUrl == '/videoConversion/list'
+		1 * controller.videoConversionService.convertToWebFormat(videoFile) >> [test: true, outputs: [[url: "https://zencoder-temp-storage-us-east-1.s3.amazonaws.com"]]]
+		view == '/videoConversion/show'
+		model.test == true
+		model.outputs[0].url == "https://zencoder-temp-storage-us-east-1.s3.amazonaws.com"
 	}
 	
 	def cleanup() {
