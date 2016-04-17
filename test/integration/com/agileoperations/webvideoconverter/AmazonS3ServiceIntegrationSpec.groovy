@@ -27,9 +27,6 @@ class AmazonS3ServiceIntegrationSpec extends Specification {
 		
 		then:
 		1 * multipartFile.getOriginalFilename() >> "sample.dv"
-		//1 * service.fileFactory.getTransferedFile("sample.dv") >> file
-		//1 * multipartFile.transferTo(file)
-		//1 * multipartFile.getBytes("\\tmp\\sample.dv") >> "some content".bytes
 		
 		uploadedS3FileInfo.uploadedFileLocation.contains("s3://agileoperations.com.br/webvideoconverter/input/")
 	}

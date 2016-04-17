@@ -80,6 +80,7 @@ class AmazonS3Service {
 				if (progressEvent.getEventCode() == ProgressEvent.COMPLETED_EVENT_CODE) {
 					log.info  "Upload complete!"
 				}
+				Thread.sleep(2000)
 			}
 		}
 		return progressListener

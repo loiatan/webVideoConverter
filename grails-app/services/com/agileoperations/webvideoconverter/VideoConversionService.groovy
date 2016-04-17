@@ -9,6 +9,6 @@ class VideoConversionService {
 	AmazonS3Service amazonS3Service
 
     void convertToWebFormat(MultipartFile videoFile) {
-		def sourceVideoFile = amazonS3Service.upload(videoFile)
+		def uploadedS3FileInfo = amazonS3Service.upload(videoFile)
     }
 }
