@@ -60,7 +60,7 @@ public class AmazonS3Client {
 				
 		// Set bucket and objectKey to upload to S3
 		uploadedS3FileInfo.put("bucketName", "agileoperations.com.br");
-		uploadedS3FileInfo.put("objectKey", "webvideoconverter/input/${uploadedS3FileInfo.timestamp}/" + uploadedS3FileInfo.get("multipartFilename"));
+		uploadedS3FileInfo.put("objectKey", "webvideoconverter/input/" + uploadedS3FileInfo.get("timestamp") + "/" + uploadedS3FileInfo.get("multipartFilename"));
 		
 		// Set S3 Object Request
 		PutObjectRequest putObjectRequest = new PutObjectRequest(
