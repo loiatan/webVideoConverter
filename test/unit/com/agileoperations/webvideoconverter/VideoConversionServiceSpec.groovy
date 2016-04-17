@@ -1,8 +1,13 @@
 package com.agileoperations.webvideoconverter
 
-import grails.test.mixin.TestFor
+import grails.test.mixin.*
+import groovy.json.JsonSlurper
+
 import org.codehaus.groovy.grails.plugins.testing.GrailsMockMultipartFile
+
 import spock.lang.Specification
+
+import com.mashape.unirest.http.HttpResponse
 
 /**
  * Unit test for VideoConversionService
@@ -16,18 +21,23 @@ class VideoConversionServiceSpec extends Specification {
 	def "should convert input video to web format"() {
 		given:
 		GrailsMockMultipartFile videoFile = Mock()
-		File file = new File("\\tmp\\sample.dv").withWriter('UTF-8') { writer ->
-			writer.write('some content')
-		}
+
 		service.amazonS3Client = Mock(AmazonS3Client)
-		//service.zencoderClient = new ZencoderClient()
+		service.zencoderClient = Mock(ZencodeClient)
+		service.jsonSlurper = Mock(JsonSlurper)
+		
+		HttpResponse httpResponse = Mock()
 		
 		when:
-		service.convertToWebFormat(videoFile)
+		Map jsonResult = service.convertToWebFormat(videoFile)
 		
 		then:
-		1 * service.amazonS3Client.upload(videoFile) >> [sourceVideoFile: "s3://agileoperations.com.br/webvideoconverter/input/timestamp/sample.dv"]
-		//1 * service.zencoderClient.encodeToWeb([sourceVideoFile: "s3://webVideoConverter/input/timestamp/sample.dv"]) >> [encodedVideoFile: "s3://webVideoConverter/output/timestamp/sample.mpg"]
+		1 * service.amazonS3Client.upload(videoFile) >> [uploadedFileLocation: "s3://agileoperations.com.br/webvideoconverter/input/timestamp/sample.dv"]
+		1 * service.zencoderClient.encodeToWeb([uploadedFileLocation: "s3://agileoperations.com.br/webvideoconverter/input/timestamp/sample.dv"]) >> httpResponse
+		1 * httpResponse.getBody() >> "url: ..."
+		1 * service.jsonSlurper.parseText("url: ...") >> [test: true, outputs: [[url: "https://zencoder-temp-storage-us-east-1.s3.amazonaws.com"]]]
+		jsonResult.test == true
+		jsonResult.outputs[0].url.contains("https://zencoder-temp-storage-us-east-1.s3.amazonaws.com")
 	}
 	
     def cleanup() {
