@@ -6,9 +6,7 @@ import org.springframework.web.multipart.MultipartFile
 @Transactional
 class VideoConversionService {
 	
-	AmazonS3Service amazonS3Service
-
     void convertToWebFormat(MultipartFile videoFile) {
-		def uploadedS3FileInfo = amazonS3Service.upload(videoFile)
+		def uploadedS3FileInfo = new AmazonS3Client().upload(videoFile)
     }
 }
