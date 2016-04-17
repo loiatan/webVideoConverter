@@ -51,6 +51,7 @@ grails.project.dependency.resolution = {
         // runtime 'mysql:mysql-connector-java:5.1.29'
         // runtime 'org.postgresql:postgresql:9.3-1101-jdbc41'
 		runtime "com.amazonaws:aws-java-sdk:1.10.69"
+		runtime "com.mashape.unirest:unirest-java:1.4.9"
 		
         test "org.grails:grails-datastore-test-support:1.0-grails-2.4"
 		test "cglib:cglib-nodep:2.2"
