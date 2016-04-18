@@ -26,7 +26,6 @@ class ZencoderClientIntegrationSpec extends Specification {
 		HttpResponse<JsonNode> result = client.encodeToWeb(uploadedS3FileInfo)
 		
 		then:
-		//{"id":254369387,"test":true,"outputs":[{"id":823287249,"label":null,"url":"https://zencoder-temp-storage-us-east-1.s3.amazonaws.com/o/20160417/3bca66113c9084df19f749bdbc91945e/e2ea957b0596449ae64bd4ac4cf81d03.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAI456JQ76GBU7FECA%2F20160417%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20160417T193159Z&X-Amz-Expires=86399&X-Amz-SignedHeaders=host&X-Amz-Signature=440a09ecfddb99fd974daeaa65283023d12c0502d9fb2e392023aa1c9aee00f8"}]}
 		JsonSlurper jsonSlurper = new JsonSlurper()
 		Map jsonResult = jsonSlurper.parseText(result.getBody().toString())
 		
@@ -35,7 +34,8 @@ class ZencoderClientIntegrationSpec extends Specification {
 		jsonResult.outputs[0].label == "mp4 low"
 		
 	}
-	/* Example
+	
+	/* Example of jsonResult as JSON
 	 """
 	 {
 	 "id": 254232685,

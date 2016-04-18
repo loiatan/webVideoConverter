@@ -21,13 +21,14 @@ public class ZencodeClient {
 	public HttpResponse<JsonNode> encodeToWeb(Map<String, String> uploadedS3FileInfo) throws UnirestException{
 		
 		String uploadedFileLocation = uploadedS3FileInfo.get("uploadedFileLocation");
-		String timestamp = uploadedS3FileInfo.get("timestamp");
-		String multipartFilename = uploadedS3FileInfo.get("multipartFilename");
+		String timestamp = String.valueOf(uploadedS3FileInfo.get("timestamp"));
+		String multipartFilename = uploadedS3FileInfo.get("multipartFilename").replaceAll("\\.\\w+", ".mp4"); //.replace(".dv", ".mp4");
 		
 		String jsonBody = "{\"input\":" + "\"" + uploadedFileLocation + "\"" 
 				+ ", \"test\":\"true\""
 				+ ", \"outputs\": ["
-				+ "{\"url\":" + "\"s3://agileoperations.com.br/webvideoconverter/output/"+ timestamp + "/" + multipartFilename + "\""
+				+ "{ \"public\": \"true\""
+				+ ", \"url\":" + "\"s3://agileoperations.com.br/webvideoconverter/output/"+ timestamp + "/" + multipartFilename + "\""
 				+ ", \"label\": \"mp4 low\""
 				+ ", \"size\": \"640x480\""
 				+" }]"
