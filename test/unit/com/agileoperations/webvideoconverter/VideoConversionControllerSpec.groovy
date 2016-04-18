@@ -26,8 +26,8 @@ class VideoConversionControllerSpec extends Specification {
 		
 		then:
 		request.getFile("videoFile") == videoFile
-		1 * controller.videoConversionService.convertToWebFormat(videoFile) >> [test: true, outputs: [[id: 234341, url: "https://zencoder-temp-storage-us-east-1.s3.amazonaws.com"]]]
-		1 * controller.videoConversionService.getJobStatus("234341") >> [test: true, outputs: [[state: "finished", id: 234341, url: "https://zencoder-temp-storage-us-east-1.s3.amazonaws.com"]]]
+		1 * controller.videoConversionService.convertToWebFormat(videoFile) >> [id: 100, test: true, outputs: [[id: 234341, url: "https://zencoder-temp-storage-us-east-1.s3.amazonaws.com/input/sample.dv"]]]
+		1 * controller.videoConversionService.getJobStatus("100") >> [state: "finished", outputs: [[state: "finished", id: 234341]]]
 		view == '/videoConversion/show'
 	}
 	
