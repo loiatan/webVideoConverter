@@ -79,8 +79,6 @@ public class AmazonS3Client {
 		// Wait process to finish
 		upload.waitForCompletion();
 		
-		// Shutdown transfer manager
-		transferManager.shutdownNow();
 		// Set uploaded location of the file into uploadedS3FileInfo Map		
 		uploadedS3FileInfo.put("uploadedFileLocation", "s3://" + uploadedS3FileInfo.get("bucketName") + "/" + uploadedS3FileInfo.get("objectKey"));
 		

@@ -26,10 +26,9 @@ class VideoConversionControllerSpec extends Specification {
 		
 		then:
 		request.getFile("videoFile") == videoFile
-		1 * controller.videoConversionService.convertToWebFormat(videoFile) >> [test: true, outputs: [[url: "https://zencoder-temp-storage-us-east-1.s3.amazonaws.com"]]]
+		1 * controller.videoConversionService.convertToWebFormat(videoFile) >> [test: true, outputs: [[id: 234341, url: "https://zencoder-temp-storage-us-east-1.s3.amazonaws.com"]]]
+		1 * controller.videoConversionService.getJobStatus("234341") >> [test: true, outputs: [[state: "finished", id: 234341, url: "https://zencoder-temp-storage-us-east-1.s3.amazonaws.com"]]]
 		view == '/videoConversion/show'
-		model.test == true
-		model.outputs[0].url == "https://zencoder-temp-storage-us-east-1.s3.amazonaws.com"
 	}
 	
 	def cleanup() {

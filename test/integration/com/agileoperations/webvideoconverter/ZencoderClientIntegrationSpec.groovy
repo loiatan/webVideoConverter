@@ -41,7 +41,7 @@ class ZencoderClientIntegrationSpec extends Specification {
 		ZencodeClient client = new ZencodeClient()
 		
 		when:
-		HttpResponse<JsonNode> result = client.getStatus(jobId)
+		HttpResponse<JsonNode> result = client.getJobStatus(jobId)
 		
 		then:
 		JsonSlurper jsonSlurper = new JsonSlurper()

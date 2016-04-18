@@ -46,7 +46,7 @@ public class ZencodeClient {
 		return jsonResponse;
 	}
 	
-	public HttpResponse<JsonNode> getStatus(String jobId) throws UnirestException{
+	public HttpResponse<JsonNode> getJobStatus(String jobId) throws UnirestException{
 		
 		HttpResponse<JsonNode> jsonResponse = Unirest.get("https://app.zencoder.com/api/v2/jobs/" + jobId + "/progress")
 				.header("accept", "application/json")
