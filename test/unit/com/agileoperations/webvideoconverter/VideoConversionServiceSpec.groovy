@@ -1,6 +1,6 @@
 package com.agileoperations.webvideoconverter
 
-import grails.test.mixin.*
+import grails.test.mixin.TestFor
 import groovy.json.JsonSlurper
 
 import org.codehaus.groovy.grails.plugins.testing.GrailsMockMultipartFile
