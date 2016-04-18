@@ -16,14 +16,34 @@ class VideoConversionService {
 	JsonSlurper jsonSlurper
 	
     public Map convertToWebFormat(MultipartFile videoFile) {
-		amazonS3Client = amazonS3Client == null ? new AmazonS3Client() : amazonS3Client
+		amazonS3Client = initialize(amazonS3Client)
 		Map uploadedS3FileInfo = amazonS3Client.upload(videoFile)
 		
-		zencoderClient = zencoderClient == null ? new ZencodeClient() : zencoderClient
+		zencoderClient = initialize(zencoderClient)
 		HttpResponse<JsonNode> encodedVideoFileInfo = zencoderClient.encodeToWeb(uploadedS3FileInfo)
 		
-		jsonSlurper = jsonSlurper == null ? new JsonSlurper() : jsonSlurper
+		jsonSlurper = initialize(jsonSlurper)
 		Map jsonResult = jsonSlurper.parseText(encodedVideoFileInfo.getBody().toString())
 		return jsonResult
     }
+	
+	public Map getStatus(String jobId){
+		zencoderClient = initialize(zencoderClient)
+		HttpResponse<JsonNode> encodedVideoFileInfo = zencoderClient.getStatus(jobId)
+		
+		jsonSlurper = initialize(jsonSlurper)
+		Map jsonResult = jsonSlurper.parseText(encodedVideoFileInfo.getBody().toString())
+		return jsonResult
+	}
+	
+	private Object initialize(Object obj){
+		if(obj.class instanceof AmazonS3Client && amazonS3Client == null){
+			obj = new AmazonS3Client()
+		} else if (obj.class instanceof ZencodeClient && zencoderClient == null){
+			obj = new ZencodeClient()
+		} else if (obj.class instanceof JsonSlurper && jsonSlurper == null){
+			obj = new JsonSlurper()
+		}
+		return obj
+	}
 }

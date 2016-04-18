@@ -35,20 +35,21 @@ class ZencoderClientIntegrationSpec extends Specification {
 		
 	}
 	
-	/* Example of jsonResult as JSON
-	 """
-	 {
-	 "id": 254232685,
-	 "outputs": [    
-	   {
-		 "id": 822833653,
-		 "label": "mp4 low",
-		 "url": "http://agileoperations.com.br.s3.amazonaws.com/webvideoconverter/output/timestamp/sample-mobile.mp4"
-	   }
-	 ],
-	 "test": true
-	 }"""
-   */
+	def "should query job status using zencoder API"(){
+		given:
+		String jobId = "254419025"
+		ZencodeClient client = new ZencodeClient()
+		
+		when:
+		HttpResponse<JsonNode> result = client.getStatus(jobId)
+		
+		then:
+		JsonSlurper jsonSlurper = new JsonSlurper()
+		Map jsonResult = jsonSlurper.parseText(result.getBody().toString())
+		
+		jsonResult.state == "finished"
+	}
+	
 	
     def cleanup() {
     }
