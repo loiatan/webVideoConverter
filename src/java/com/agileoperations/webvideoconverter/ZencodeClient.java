@@ -8,7 +8,6 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import com.mashape.unirest.request.body.Body;
 
 public class ZencodeClient {
 	
@@ -25,7 +24,7 @@ public class ZencodeClient {
 		String multipartFilename = uploadedS3FileInfo.get("multipartFilename").replaceAll("\\.\\w+", ".mp4"); //.replace(".dv", ".mp4");
 		
 		String jsonBody = "{\"input\":" + "\"" + uploadedFileLocation + "\"" 
-				+ ", \"test\":\"true\""
+				+ ", \"test\":\"false\""
 				+ ", \"outputs\": ["
 				+ "{ \"public\": \"true\""
 				+ ", \"url\":" + "\"s3://agileoperations.com.br/webvideoconverter/output/"+ timestamp + "/" + multipartFilename + "\""

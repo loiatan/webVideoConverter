@@ -73,10 +73,10 @@ a:hover, a:active {
 }
 
 h1 {
-	color: #000000;
-	font-weight: normal;
+	color: white;
+	font-weight: bold;
 	font-size: 1.25em;
-	margin: 0.8em 0 0.3em 0;
+	margin: 1em 0em 1em 7em;
 }
 
 ul {
@@ -92,6 +92,8 @@ img {
 #grailsLogo a {
 	display: inline-block;
 	margin: 1em;
+	text-decoration: none;
+	font-size: 30px;
 }
 
 .content {
@@ -109,11 +111,12 @@ img {
 
 .footer {
 	background: #8080ff;
-	color: #000;
+	color: white;
 	clear: both;
 	font-size: 0.8em;
 	margin-top: 1.5em;
 	padding: 1em;
+	padding-left: 33em;
 	min-height: 1em;
 }
 
@@ -248,7 +251,7 @@ label {
 input, select, textarea {
 	background-color: #fcfcfc;
 	border: 1px solid #cccccc;
-	font-size: 1em;
+	font-size: 14px;
 	padding: 0.2em 0.4em;
 }
 
@@ -638,8 +641,8 @@ a.skip {
 }
 
 h2 {
-	margin-top: 1em;
 	margin-bottom: 0.3em;
+	margin-left: 0em;
 	font-size: 1em;
 }
 

@@ -11,12 +11,20 @@ class VideoConversionController {
     def convert() {
 		MultipartFile file = request.getFile("videoFile")
 		Map encodedVideoInfo = videoConversionService.convertToWebFormat(file)
-		Map jobStatus = videoConversionService.getJobStatus(encodedVideoInfo.outputs[0].id.toString())
-		while(jobStatus.state == "progress"){
-			jobStatus = videoConversionService.getJobStatus(encodedVideoInfo.outputs[0].id)
-			log.info "Job: " + encodedVideoInfo.outputs[0].id + ", Status: " + jobStatus.state
+		log.info "Encoded Video Info: " + encodedVideoInfo
+		Map jobStatus = videoConversionService.getJobStatus(encodedVideoInfo.id.toString())
+		log.info "Job: " + jobStatus
+		log.info "Job: " + encodedVideoInfo.id + ", Status: " + jobStatus.state
+		while(jobStatus.state == "pending" || jobStatus.state == "waiting" || jobStatus.state == "processing"){
 			Thread.sleep(5000)
+			jobStatus = videoConversionService.getJobStatus(encodedVideoInfo.id.toString())
+			log.info "Encoding job: " + encodedVideoInfo.id + ", Job status: " + jobStatus.state
+			if(jobStatus.state == "finished"){
+				log.info "Encoding job finished!"
+				log.info "Job: " + jobStatus
+				break;
+			}
 		}
-		render(view: 'show', model: jobStatus)
+		render(view: 'show', model: [encodedVideoInfo: encodedVideoInfo, jobStatus: jobStatus])
 	}
 }

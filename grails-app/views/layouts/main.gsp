@@ -17,9 +17,9 @@
 		<g:layoutHead/>
 	</head>
 	<body>
-		<div id="grailsLogo" role="banner"><a href="http://agileoperations.com.br"><h1>Web Video Converter</h1></a></div>
+		<div id="grailsLogo" role="banner"><a href="http://www.agileoperations.com.br"><h1>Web Video Converter</h1></a></div>
 		<g:layoutBody/>
-		<div class="footer" role="contentinfo"></div>
+		<div class="footer" role="contentinfo">Agile Operations</div>
 		<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
 	</body>
 </html>

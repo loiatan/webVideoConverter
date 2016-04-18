@@ -6,11 +6,13 @@
 	</head>
 	<body>
 		<div id="page-body" role="main">
-			<h1>Play converted video now:</h1>
+			<h2>Play converted video now: </h2>
 			<video width="320" height="240" controls>
-			  <source src="https://s3-sa-east-1.amazonaws.com/agileoperations.com.br/webvideoconverter/output/timestamp/sample-mobile.mp4" type="video/mp4">
+			  <source src="${encodedVideoInfo.outputs[0].url}" type="video/mp4">
 			Your browser does not support the video tag.
 			</video>
+			<h2>Job ${jobStatus.state}!</h2>
 		</div>
+		
 	</body>
 </html>
