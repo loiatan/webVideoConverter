@@ -253,6 +253,7 @@ input, select, textarea {
 	border: 1px solid #cccccc;
 	font-size: 14px;
 	padding: 0.2em 0.4em;
+	margin: 1em;
 }
 
 select {
@@ -637,7 +638,8 @@ a.skip {
 }
 
 #page-body {
-	margin: 7em 14em 7em 18em;
+	margin: 2em 14em 2em 18em;
+	height: 22em;
 }
 
 h2 {
