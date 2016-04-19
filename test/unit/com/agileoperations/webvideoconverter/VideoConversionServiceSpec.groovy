@@ -22,7 +22,7 @@ class VideoConversionServiceSpec extends Specification {
 		given:
 		GrailsMockMultipartFile videoFile = Mock()
 
-		service.amazonS3Client = Mock(AmazonS3Client)
+		service.amazonS3Client = Mock(S3Client)
 		service.zencoderClient = Mock(ZencodeClient)
 		service.jsonSlurper = Mock(JsonSlurper)
 		

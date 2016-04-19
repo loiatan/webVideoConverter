@@ -6,14 +6,14 @@ import spock.lang.Specification
 /**
  * Integration tests for AmazonS3Client
  */
-class AmazonS3ClientIntegrationSpec extends Specification {
+class S3ClientIntegrationSpec extends Specification {
 	
     def setup() {
     }
 
 	void "should upload a file"() {
 		given:
-		AmazonS3Client client = new AmazonS3Client()
+		S3Client client = new S3Client()
 		GrailsMockMultipartFile multipartFile = Mock()
 		File file = new File("\\tmp\\sample.dv").withWriter('UTF-8') { writer ->
 			writer.write('some content')

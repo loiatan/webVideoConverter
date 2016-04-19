@@ -20,7 +20,7 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.Upload;
 
-public class AmazonS3Client {
+public class S3Client {
 	
 	// Default SDK credentials provider 
 	DefaultAWSCredentialsProviderChain credentialProviderChain;
@@ -34,7 +34,7 @@ public class AmazonS3Client {
 	// Injecting log4j
 	Logger log = Logger.getLogger(getClass());
 	
-	public AmazonS3Client(){
+	public S3Client(){
 		credentialProviderChain = new DefaultAWSCredentialsProviderChain();
 		transferManager = new TransferManager(credentialProviderChain.getCredentials());
 		fileFactory = new FileFactory();

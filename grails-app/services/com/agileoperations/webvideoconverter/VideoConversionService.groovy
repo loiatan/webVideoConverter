@@ -11,19 +11,19 @@ import com.mashape.unirest.http.JsonNode
 @Transactional
 class VideoConversionService {
 	
-	AmazonS3Client amazonS3Client
+	S3Client s3Client
 	ZencodeClient zencoderClient
 	JsonSlurper jsonSlurper
 	
 	public VideoConversionService(){
-		amazonS3Client = new AmazonS3Client()
+		s3Client = new S3Client()
 		zencoderClient = new ZencodeClient()
 		jsonSlurper = new JsonSlurper()
 	}
 	
     public Map convertToWebFormat(MultipartFile videoFile) {
 		
-		Map uploadedS3FileInfo = amazonS3Client.upload(videoFile)
+		Map uploadedS3FileInfo = s3Client.upload(videoFile)
 		
 		HttpResponse<JsonNode> encodedVideoFileInfo = zencoderClient.encodeToWeb(uploadedS3FileInfo)
 		
