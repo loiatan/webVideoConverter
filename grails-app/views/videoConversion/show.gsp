@@ -8,7 +8,7 @@
 		<div id="page-body" role="main">
 			<h2>Play converted video now: </h2>
 			<video width="320" height="240" controls>
-			  <source src="${encodedVideoInfo.outputs[0].url}" type="video/mp4">
+			  <source src="${encodedVideoFileInfoMap.outputs[0].url}" type="video/mp4">
 			Your browser does not support the video tag.
 			</video>
 			<h2>Job ${jobStatus.state}!</h2>

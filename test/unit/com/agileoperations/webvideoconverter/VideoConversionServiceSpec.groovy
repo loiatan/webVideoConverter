@@ -22,7 +22,7 @@ class VideoConversionServiceSpec extends Specification {
 		given:
 		GrailsMockMultipartFile videoFile = Mock()
 
-		service.amazonS3Client = Mock(S3Client)
+		service.s3Client = Mock(S3Client)
 		service.zencoderClient = Mock(ZencodeClient)
 		service.jsonSlurper = Mock(JsonSlurper)
 		
@@ -32,13 +32,22 @@ class VideoConversionServiceSpec extends Specification {
 		Map jsonResult = service.convertToWebFormat(videoFile)
 		
 		then:
-		1 * service.amazonS3Client.upload(videoFile) >> [uploadedFileLocation: "s3://agileoperations.com.br/webvideoconverter/input/timestamp/sample.dv"]
+		1 * service.s3Client.upload(videoFile) >> [uploadedFileLocation: "s3://agileoperations.com.br/webvideoconverter/input/timestamp/sample.dv"]
+		
+		and:
 		1 * service.zencoderClient.encodeToWeb([uploadedFileLocation: "s3://agileoperations.com.br/webvideoconverter/input/timestamp/sample.dv"]) >> httpResponse
 		1 * httpResponse.getBody() >> "url: ..."
-		1 * service.jsonSlurper.parseText("url: ...") >> [test: true, outputs: [[id: 234341, url: "https://zencoder-temp-storage-us-east-1.s3.amazonaws.com"]]]
-		jsonResult.test == true
-		jsonResult.outputs[0].id == 234341
-		jsonResult.outputs[0].url.contains("https://zencoder-temp-storage-us-east-1.s3.amazonaws.com")
+		1 * service.jsonSlurper.parseText("url: ...") >> [id: 100, test: true, outputs: [[id: 234341, url: "https://zencoder-temp-storage-us-east-1.s3.amazonaws.com"]]]
+		
+		and:
+		1 * service.zencoderClient.getJobStatus("100") >> httpResponse
+		1 * httpResponse.getBody() >> "url: ..."
+		1 * service.jsonSlurper.parseText("url: ...") >> [state: "finished", outputs: [[state: "finished", id: 234341]]]
+		
+		and:
+		jsonResult.encodedVideoFileInfoMap.test == true
+		jsonResult.encodedVideoFileInfoMap.outputs[0].id == 234341
+		jsonResult.encodedVideoFileInfoMap.outputs[0].url.contains("https://zencoder-temp-storage-us-east-1.s3.amazonaws.com")
 	}
 	
     def cleanup() {

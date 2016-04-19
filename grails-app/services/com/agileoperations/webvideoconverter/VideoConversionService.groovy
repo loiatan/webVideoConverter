@@ -2,9 +2,7 @@ package com.agileoperations.webvideoconverter
 
 import grails.transaction.Transactional
 import groovy.json.JsonSlurper
-
 import org.springframework.web.multipart.MultipartFile
-
 import com.mashape.unirest.http.HttpResponse
 import com.mashape.unirest.http.JsonNode
 
@@ -26,19 +24,40 @@ class VideoConversionService {
 		Map uploadedS3FileInfo = s3Client.upload(videoFile)
 		
 		HttpResponse<JsonNode> encodedVideoFileInfo = zencoderClient.encodeToWeb(uploadedS3FileInfo)
+
+		Map encodedVideoFileInfoMap = getMapFromJsonString(encodedVideoFileInfo)
 		
-		String encodedVideoFileInfoJson = encodedVideoFileInfo.getBody().toString()
+		HttpResponse<JsonNode> jobStatus = zencoderClient.getJobStatus(encodedVideoFileInfoMap.id.toString())
 		
-		Map encodedVideoFileInfoMap = jsonSlurper.parseText(encodedVideoFileInfoJson)
-		return encodedVideoFileInfoMap
+		Map jobStatusMap = getMapFromJsonString(jobStatus)
+		
+		log.info "Job: " + jobStatusMap
+		log.info "Job: " + encodedVideoFileInfoMap.id + ", Status: " + jobStatusMap.state
+		while(jobStatusMap.state == "pending" || jobStatusMap.state == "waiting" || jobStatusMap.state == "processing"){
+			Thread.sleep(5000)
+			jobStatusMap = getMapFromJsonString(zencoderClient.getJobStatus(encodedVideoFileInfoMap.id.toString()))
+			log.info "Encoding job: " + encodedVideoFileInfoMap.id + ", Job status: " + jobStatusMap.state
+			if(jobStatusMap.state == "finished"){
+				log.info "Encoding job finished!"
+				log.info "Job: " + jobStatusMap
+				break;
+			}
+		}
+
+		return [encodedVideoFileInfoMap: encodedVideoFileInfoMap, jobStatus: jobStatusMap]
     }
 	
 	public Map getJobStatus(String jobId){
 		HttpResponse<JsonNode> jobStatus = zencoderClient.getJobStatus(jobId)
 
-		String jobStatusJson = jobStatus.getBody().toString()
+		Map jobStatusMap = getMapFromJsonString(jobStatus)
 		
-		Map jobStatusMap = jsonSlurper.parseText(jobStatusJson)
 		return jobStatusMap
+	}
+	
+	private Map getMapFromJsonString(HttpResponse<JsonNode> jsonObject){
+		String jsonString = jsonObject.getBody().toString()
+		Map map = jsonSlurper.parseText(jsonString)
+		return map
 	}
 }
