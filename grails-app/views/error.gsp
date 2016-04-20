@@ -11,7 +11,7 @@
 		</g:if>
 		<g:else>
 			<ul class="errors">
-				<li>An error has occurred</li>
+				<li>An error has occurred. Please, try again! ${exception.message}</li>
 			</ul>
 		</g:else>
 	</body>

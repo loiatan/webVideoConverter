@@ -130,8 +130,8 @@ img {
 	width: 16px;
     padding: 0.5em;
     position: absolute;
-    right: 0;
-	top: 0;
+    right: 20em;
+    top: 392px;
 	text-indent: -9999px;
 }
 
@@ -638,8 +638,13 @@ a.skip {
 }
 
 #page-body {
-	margin: 2em 14em 2em 18em;
-	height: 22em;
+	margin: 8em 14em 2em 18em;
+    height: 17em;
+}
+
+#page-player {
+    margin: 3em 14em 2em 18em;
+    height: 21em;
 }
 
 h2 {
